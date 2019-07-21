@@ -1,0 +1,21 @@
+chandler_family:
+  entities:
+     - group.kids
+     - group.parents
+kids:
+  entities:
+    - device_tracker.timothy
+    - device_tracker.hannah
+    - device_tracker.jonathan
+
+master_lights:
+  entities:
+    - light.hue_color_lamp_1
+    - light.hue_color_lamp_2
+    - light.hue_color_lamp_3
+    - light.hue_color_lamp_4
+
+parents:
+  entities:
+    - device_tracker.mickc_2
+    - device_tracker.carol_2

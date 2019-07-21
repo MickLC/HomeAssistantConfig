@@ -1,0 +1,4 @@
+zone.home:
+  radius: 150
+group.all_automations:
+  hidden: false

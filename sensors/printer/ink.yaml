@@ -1,0 +1,6 @@
+platform: ink
+host: 10.0.0.120
+scan_interval: 300
+resources:
+  - black
+  - color

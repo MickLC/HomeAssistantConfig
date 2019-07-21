@@ -1,0 +1,30 @@
+# This will override the default home zone
+- name: Home
+  latitude: 30.227558
+  longitude: -95.460534
+  radius: 150
+  icon: mdi:home
+
+- name: Church
+  latitude: 30.187145
+  longitude: -95.462067
+  radius: 150
+  icon: mdi:church
+
+#- name: Choir
+#  latitude: 30.017953
+#  longitude: -95.434467
+#  radius: 100
+#  icon: mdi:bookmark-music
+
+#- name: Grandmother
+#  latitude: 31.764696
+#  longitude: -94.181099
+#  radius: 125
+#  icon: mdi:home
+
+#- name: Lone Star
+#  latitude: 30.211067
+#  longitude: -95.467664
+#  radius: 450
+#  icon: mdi:school

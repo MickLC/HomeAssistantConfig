@@ -1,0 +1,146 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 30.228169
+  longitude: -95.459443
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 38
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  auth_providers:
+  - type: homeassistant
+  - type: trusted_networks 
+    trusted_networks:
+    - 127.0.0.1
+    - ::1
+    - 10.0.0.0/24
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+recorder:
+  db_url: !secret recorder_uri
+  purge_keep_days: 3
+  purge_interval: 1
+
+#enable system health checks
+system_health:
+
+# Enable the auth component
+auth:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: hassio.whizardries.com
+  cors_allowed_origins:
+    - https://google.com
+    - https://home-assistant.io
+  use_x_forwarded_for: True
+  trusted_proxies: 127.0.0.1
+#  trusted_networks:
+#    - 127.0.0.1
+#    - ::1
+#    - 10.0.0.0/24
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+  ignore: philips_hue
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Enable push notifications
+notify: !include notify.yaml
+
+# Track the sun
+sun:
+
+# Platforms
+sensor: !include_dir_list sensors
+
+binary_sensor:
+  - platform: ring
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+camera:
+  - platform: ring
+device_tracker:
+- platform: netgear
+  password: !secret orbi_password
+  port: 80
+ecobee:
+  api_key: !secret ecobee_key
+google_assistant: !include google_assistant.yaml
+group: !include groups.yaml
+hangouts: !include google_hangouts.yaml
+hue:
+  bridges:
+    - host: 10.0.0.27
+      allow_unreachable: true
+ifttt:
+  key: !secret ifttt_key
+intent_script: !include intent_scripts.yaml
+media_player:
+  - platform: plex
+    show_all_controls: false
+    use_episode_art: true
+    remove_unavailable_clients: true
+    client_remove_interval: 600
+ring:
+    username: !secret ring_username
+    password: !secret ring_password
+script: !include scripts.yaml
+switch:
+   - platform: wake_on_lan
+     name: 'Mac Mini Wake On LAN'
+     mac_address: "28:CF:DA:05:EF:25"
+tplink:
+  switch:
+    - host: 10.0.0.13
+    - host: 10.0.0.14
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api
+    mode: daily
+zone: !include zones.yaml
+
+#usps:
+#    username: !secret usps_username
+#    password: !secret usps_password

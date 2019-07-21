@@ -1,0 +1,24 @@
+intents:
+  BedroomTemperature:
+    sentences:
+      - What is the temperature in the master bedroom
+  HangoutsHelp:
+    sentences:
+      - Help
+  HannahTemperature:
+    sentences:
+      - What is the temperature in Hannah's room
+  JonathanTemperature:
+    sentences:
+      - What is the temperature in Jonathan's room
+  LivingRoomTemperature:
+    sentences:
+      - What is the temperature in the living room
+  Ping:
+    sentences:
+      - How many conversations do you know
+  TimothyTemperature:
+    sentences:
+      - What is the temperature in Timothy's room
+#  default_conversations:
+#    - id: CONVERSATION_ID0

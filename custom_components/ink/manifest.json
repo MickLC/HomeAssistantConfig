@@ -1,0 +1,8 @@
+{
+  "domain": "ink_levels",
+  "name": "Ink levels",
+  "documentation": "https://community.home-assistant.io/t/custom-component-for-printer-ink-levels/36431/35",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}

@@ -1,0 +1,18 @@
+Ping:
+  speech:
+    text: I know {{ states('hangouts.conversations') }} conversations
+LivingRoomTemperature:
+  speech:
+    text: The temperature in the living room is {{ states('sensor.main_floor_temperature') }}.
+BedroomTemperature:
+  speech:
+    text: The temperature in the master bedroom is {{ states('sensor.bedroom_temperature') }}.
+HannahTemperature:
+  speech:
+    text: The temperature in Hannah's room is {{ states('sensor.hannah_temperature') }}.
+JonathanTemperature:
+  speech:
+    text: The temperature in Jonathan's room is {{ states('sensor.jonathan_temperature') }}.
+TimothyTemperature:
+  speech:
+    text: The temperature in Timothy's room is {{ states('sensor.timothy_temperature') }}.

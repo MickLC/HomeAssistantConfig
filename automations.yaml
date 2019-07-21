@@ -1,0 +1,193 @@
+- id: All_Gone
+  alias: All Gone
+  trigger:
+    platform: state
+    entity_id: group.chandler_family
+    from: home
+    to: not_home
+  action:
+    service: climate.set_preset_mode
+    data:
+      entity_id: climate.main_floor,climate.upstairs
+      preset_mode: 'away'
+- id: All_Home
+  alias: All Home
+  trigger:
+    platform: state
+    entity_id: group.chandler_family
+    from: not_home
+    to: home
+  action:
+    service: climate.set_preset_mode
+    data:
+      entity_id: climate.main_floor,climate.upstairs
+      preset_mode: 'home'
+- id: Kids_Gone
+  alias: Kids Gone
+  trigger:
+    platform: state
+    entity_id: group.kids
+    from: home
+    to: not_home
+  action:
+    service: climate.set_preset_mode
+    data:
+      entity_id: climate.upstairs
+      preset_mode: 'away'
+- id: Kids_Home
+  alias: Kids Home
+  trigger:
+    platform: state
+    entity_id: group.kids
+    from: not_home
+    to: home
+  action:
+    service: climate.set_preset_mode
+    data:
+      entity_id: climate.upstairs
+      preset_mode: 'home'
+- id: Parents_Gone
+  alias: Parents Gone
+  trigger:
+  - entity_id: group.parents
+    from: home
+    platform: state
+    to: not_home
+  action:
+  - entity_id: light.hue_color_lamp_1
+    service: light.turn_off
+  - entity_id: light.hue_color_lamp_2
+    service: light.turn_off
+  - entity_id: light.hue_color_lamp_3
+    service: light.turn_off
+  - entity_id: light.hue_color_lamp_4
+    service: light.turn_off
+  - entity_id: switch.fountain
+    service: switch.turn_off
+- id: Parents_Home
+  alias: Parents Home
+  trigger:
+  - entity_id: group.parents
+    from: not_home
+    platform: state
+    to: home
+  action:
+  - entity_id: light.hue_color_lamp_1
+    service: light.turn_on
+  - entity_id: light.hue_color_lamp_2
+    service: light.turn_on
+  - entity_id: light.hue_color_lamp_3
+    service: light.turn_on
+  - entity_id: light.hue_color_lamp_4
+    service: light.turn_on
+  - entity_id: switch.fountain
+    service: switch.turn_on
+- id: Towel_Rack_On
+  alias: Towel Rack On
+  trigger:
+    platform: time
+    at: 07:45:00
+  action:
+  - service: switch.turn_on
+    entity_id: switch.towel_rack
+- id: Towel_Rack_Done
+  alias: Towel Rack Off
+  trigger:
+    platform: time
+    at: '12:00:00'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.towel_rack
+- id: Fountain_Start
+  alias: Fountain Start
+  trigger:
+    platform: time
+    at: 06:00:00
+  action:
+  - service: switch.turn_on
+    entity_id: switch.fountain
+- id: Fountain_Stop
+  alias: Fountain Stop
+  trigger:
+    platform: time
+    at: 00:00:01
+  action:
+  - service: switch.turn_off
+    entity_id: switch.fountain
+- id: Aquarium_Good_Night
+  alias: Aquarium Good Night
+  trigger:
+  - entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    below: '-10'
+    platform: numeric_state
+  condition:
+  - after: '12:00:00'
+    condition: time
+  action:
+  - service: light.turn_off
+    entity_id: light.aquarium_white
+    data:
+      transition: '300'
+  - service: light.turn_on
+    entity_id: light.aquarium_color
+    data:
+      effect: stop
+      transition: '300'
+      rgb_color:
+      - 0
+      - 0
+      - 255
+      brightness: '5'
+- id: Aquarium_Good_Morning
+  alias: Aquarium Good Morning
+  trigger:
+  - above: '5'
+    entity_id: sun.sun
+    platform: numeric_state
+    value_template: '{{ state.attributes.elevation }}'
+  condition:
+  - before: '12:00:00'
+    condition: time
+  action:
+  - data:
+      brightness: '255'
+      transition: '900'
+    entity_id: light.aquarium_white
+    service: light.turn_on
+  - data:
+      effect: stop
+      brightness: '255'
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      transition: '900'
+    entity_id: light.aquarium_color
+    service: light.turn_on
+- id: Aquarium_Good_Evening
+  alias: Aquarium Good Evening
+  trigger:
+  - below: '18'
+    entity_id: sun.sun
+    platform: numeric_state
+    value_template: '{{ state.attributes.elevation }}'
+  condition:
+  - after: '12:00:00'
+    condition: time
+  action:
+  - data:
+      brightness: '64'
+      transition: '900'
+    entity_id: light.aquarium_white
+    service: light.turn_on
+  - data:
+      effect: stop
+      brightness: '155'
+      rgb_color:
+      - 0
+      - 128
+      - 255
+      transition: '900'
+    entity_id: light.aquarium_color
+    service: light.turn_on

@@ -1,0 +1,11 @@
+project_id: whizardries-ga-home-assistant
+api_key: !secret google_assistant_api_key
+exposed_domains:
+  - group
+  - light
+  - switch
+entity_config:
+#  group.ring_stuff:
+#    expose: false
+  light.group_for_wakeup:
+    expose: false
