@@ -9,7 +9,7 @@
     service: climate.set_preset_mode
     data:
       entity_id: climate.main_floor,climate.upstairs
-      preset_mode: 'away'
+      preset_mode: away
 - id: All_Home
   alias: All Home
   trigger:
@@ -21,19 +21,65 @@
     service: climate.set_preset_mode
     data:
       entity_id: climate.main_floor,climate.upstairs
-      preset_mode: 'home'
+      preset_mode: home
+- id: Hannah_Home
+  alias: Hannah Home
+  trigger:
+  - entity_id: device_tracker.hannah
+    from: not_home
+    platform: state
+    to: home
+  action:
+  - data:
+      entity_id: light.hue_color_lamp_1_5
+    service: light.turn_on
+  - data:
+      entity_id: light.hue_color_lamp_2_5
+    service: light.turn_on
+- id: Jonathan_Home
+  alias: Jonathan Home
+  trigger:
+  - entity_id: device_tracker.jonathan
+    from: not_home
+    platform: state
+    to: home
+  action:
+  - data:
+      entity_id: light.hue_color_lamp_1_3
+    service: light.turn_on
+  - data:
+      entity_id: light.hue_color_lamp_2_3
+    service: light.turn_on
 - id: Kids_Gone
   alias: Kids Gone
   trigger:
-    platform: state
-    entity_id: group.kids
+  - entity_id: group.kids
     from: home
+    platform: state
     to: not_home
   action:
-    service: climate.set_preset_mode
-    data:
+  - data:
       entity_id: climate.upstairs
-      preset_mode: 'away'
+      preset_mode: away
+    service: climate.set_preset_mode
+  - data:
+      entity_id: light.hue_color_lamp_1_3
+    service: light.turn_off
+  - data:
+      entity_id: light.hue_color_lamp_2_3
+    service: light.turn_off
+  - data:
+      entity_id: light.hue_color_lamp_1_4
+    service: light.turn_off
+  - data:
+      entity_id: light.hue_color_lamp_2_4
+    service: light.turn_off
+  - data:
+      entity_id: light.hue_color_lamp_1_5
+    service: light.turn_off
+  - data:
+      entity_id: light.hue_color_lamp_2_5
+    service: light.turn_off
 - id: Kids_Home
   alias: Kids Home
   trigger:
@@ -45,11 +91,11 @@
     service: climate.set_preset_mode
     data:
       entity_id: climate.upstairs
-      preset_mode: 'home'
+      preset_mode: home
 - id: Parents_Gone
   alias: Parents Gone
   trigger:
-  - entity_id: group.parents
+    entity_id: group.parents
     from: home
     platform: state
     to: not_home
@@ -67,7 +113,7 @@
 - id: Parents_Home
   alias: Parents Home
   trigger:
-  - entity_id: group.parents
+    entity_id: group.parents
     from: not_home
     platform: state
     to: home
@@ -82,22 +128,41 @@
     service: light.turn_on
   - entity_id: switch.fountain
     service: switch.turn_on
+- id: Timothy_Home
+  alias: Timothy Home
+  trigger:
+  - entity_id: person.timothy
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
+  action:
+  - data: {}
+    entity_id: light.timothy_s_bedroom
+    service: light.turn_on
 - id: Towel_Rack_On
   alias: Towel Rack On
   trigger:
+  - at: 07:45:00
     platform: time
-    at: 07:45:00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
   action:
-  - service: switch.turn_on
-    entity_id: switch.towel_rack
+  - entity_id: switch.towel_rack
+    service: switch.turn_on
 - id: Towel_Rack_Done
   alias: Towel Rack Off
   trigger:
     platform: time
     at: '12:00:00'
   action:
-  - service: switch.turn_off
-    entity_id: switch.towel_rack
+  - entity_id: switch.towel_rack
+    service: switch.turn_off
 - id: Fountain_Start
   alias: Fountain Start
   trigger:
@@ -105,14 +170,6 @@
     at: 06:00:00
   action:
   - service: switch.turn_on
-    entity_id: switch.fountain
-- id: Fountain_Stop
-  alias: Fountain Stop
-  trigger:
-    platform: time
-    at: 00:00:01
-  action:
-  - service: switch.turn_off
     entity_id: switch.fountain
 - id: Aquarium_Good_Night
   alias: Aquarium Good Night
@@ -191,3 +248,107 @@
       transition: '900'
     entity_id: light.aquarium_color
     service: light.turn_on
+- id: '1577987801749'
+  alias: Timothy Gone
+  description: ''
+  trigger:
+  - entity_id: person.timothy
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - entity_id: light.timothy_s_bedroom
+    service: light.turn_off
+- id: '1578203742772'
+  alias: Parents Wind Down
+  description: Turn the lights down in parents' room
+  trigger:
+  - at: '22:30'
+    platform: time
+  condition: []
+  action:
+  - data:
+      group_name: Master Bedroom
+      scene_name: Relax
+    service: hue.hue_activate_scene
+  - data:
+      brightness: 10
+      transition: 1200
+    entity_id: light.master_bedroom
+    service: light.turn_on
+  - data:
+      transition: 1800
+    entity_id: light.master_bedroom
+    service: light.turn_off
+- id: '1578205391787'
+  alias: Master Off
+  description: Rig for nighttime operations
+  trigger:
+  - at: '23:00'
+    platform: time
+  condition: []
+  action:
+  - entity_id: switch.fountain
+    service: switch.turn_off
+  - entity_id: switch.towel_rack
+    service: switch.turn_off
+  - entity_id: light.living_room
+    service: light.turn_off
+- id: '1578206082335'
+  alias: Master On
+  description: Rig for daytime operations
+  trigger:
+  - at: 06:00
+    platform: time
+  condition: []
+  action:
+  - data:
+      brightness: 150
+    entity_id: light.living_room
+    service: light.turn_on
+  - data: {}
+    entity_id: switch.fountain
+    service: switch.turn_on
+- id: '1578208769250'
+  alias: Sunday Morning Opening
+  description: ''
+  trigger:
+  - at: 07:30
+    platform: time
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'off'
+  action:
+  - data:
+      brightness_pct: 100
+    entity_id: light.living_room
+    service: light.turn_on
+  - data: {}
+    entity_id: switch.fountain
+    service: switch.turn_on
+  - entity_id: switch.towel_rack
+    service: switch.turn_on
+- id: '1587167184256'
+  alias: Hydroponic lights on
+  description: ''
+  trigger:
+  - at: '6:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.ebabe1a9e2fb5f018cmzs1
+    service: switch.turn_on
+- id: '1587167321653'
+  alias: Hydroponic lights off
+  description: ''
+  trigger:
+  - at: '22:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.ebabe1a9e2fb5f018cmzs1
+    service: switch.turn_off

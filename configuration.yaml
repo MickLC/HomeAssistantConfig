@@ -1,15 +1,15 @@
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Home
+  #name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: 30.228169
-  longitude: -95.459443
+  #latitude: 30.228169
+  #longitude: -95.459443
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 38
+  #elevation: 38
   # metric for Metric, imperial for Imperial
-  unit_system: imperial
+  #unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: America/Chicago
+  #time_zone: America/Chicago
   auth_providers:
   - type: homeassistant
   - type: trusted_networks 
@@ -19,6 +19,22 @@ homeassistant:
     - 10.0.0.0/24
   # Customization file
   customize: !include customize.yaml
+
+# Enable logging
+logger:
+  default: info
+  logs:
+    # log level for HA core
+    homeassistant.core: info
+
+    # log level for MQTT integration
+    # homeassistant.components.mqtt: warning
+
+    # log level for SmartThings lights
+    # homeassistant.components.smartthings.light: info
+
+    # log level for a custom component
+    #custom_components.localtuya: debug
 
 # Show links to resources in log and frontend
 # introduction:
@@ -32,7 +48,7 @@ config:
 recorder:
   db_url: !secret recorder_uri
   purge_keep_days: 3
-  purge_interval: 1
+  #purge_interval: 1
 
 #enable system health checks
 system_health:
@@ -44,7 +60,7 @@ http:
   # Secrets are defined in the file secrets.yaml
   # api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-  base_url: hassio.whizardries.com
+  #base_url: hassio.whizardries.com
   cors_allowed_origins:
     - https://google.com
     - https://home-assistant.io
@@ -54,7 +70,7 @@ http:
 #    - 127.0.0.1
 #    - ::1
 #    - 10.0.0.0/24
-  ip_ban_enabled: True
+  ip_ban_enabled: false
   login_attempts_threshold: 5
 
 # Checks for available updates
@@ -93,21 +109,17 @@ sensor: !include_dir_list sensors
 
 binary_sensor:
   - platform: ring
-
+  - platform: workday
+    country: US
 # Text to speech
 tts:
   - platform: google_translate
 
 automation: !include automations.yaml
-camera:
-  - platform: ring
-device_tracker:
-- platform: netgear
-  password: !secret orbi_password
-  port: 80
+device_tracker: !include device_tracker.yaml
 ecobee:
   api_key: !secret ecobee_key
-google_assistant: !include google_assistant.yaml
+# google_assistant: !include google_assistant.yaml
 group: !include groups.yaml
 hangouts: !include google_hangouts.yaml
 hue:
@@ -123,14 +135,11 @@ media_player:
     use_episode_art: true
     remove_unavailable_clients: true
     client_remove_interval: 600
-ring:
-    username: !secret ring_username
-    password: !secret ring_password
 script: !include scripts.yaml
 switch:
-   - platform: wake_on_lan
-     name: 'Mac Mini Wake On LAN'
-     mac_address: "28:CF:DA:05:EF:25"
+  - platform: wake_on_lan
+    name: 'Mac Mini Wake On LAN'
+    mac: "28:CF:DA:05:EF:25"
 tplink:
   switch:
     - host: 10.0.0.13
@@ -144,3 +153,6 @@ zone: !include zones.yaml
 #usps:
 #    username: !secret usps_username
 #    password: !secret usps_password
+
+# Enables python scripts
+python_script:

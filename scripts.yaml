@@ -1,0 +1,6 @@
+'1564523403309':
+  alias: Test Script
+  sequence:
+  - data:
+      message: It's time to go to church
+    service: python_script.ping_upstairs
