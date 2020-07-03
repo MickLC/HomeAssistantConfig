@@ -45,6 +45,8 @@ frontend:
 # Enables configuration UI
 config:
 
+default_config:
+
 recorder:
   db_url: !secret recorder_uri
   purge_keep_days: 3
