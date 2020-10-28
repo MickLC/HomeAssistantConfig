@@ -146,10 +146,6 @@ tplink:
   switch:
     - host: 10.0.0.13
     - host: 10.0.0.14
-weather:
-  - platform: darksky
-    api_key: !secret darksky_api
-    mode: daily
 zone: !include zones.yaml
 
 #usps:

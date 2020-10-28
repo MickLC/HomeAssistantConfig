@@ -8,6 +8,14 @@ kids:
     - device_tracker.hannah
     - device_tracker.jonathan
 
+grow_lights:
+  entities:
+    - light.grow1
+    - light.grow2
+    - light.grow3
+    - light.grow4
+    - light.grow5
+
 master_lights:
   entities:
     - light.hue_color_lamp_1

@@ -4,3 +4,10 @@
   - data:
       message: It's time to go to church
     service: python_script.ping_upstairs
+'1598891826852':
+  alias: Reminder
+  sequence:
+  - data:
+      entity_id: media_player.jonathan_master_room
+      message: Don't forget to turn off the not smart lights
+    service: python_script.ping

@@ -338,9 +338,32 @@
     platform: time
   condition: []
   action:
-  - data: {}
-    entity_id: switch.ebabe1a9e2fb5f018cmzs1
-    service: switch.turn_on
+  - type: turn_on
+    device_id: df36b3f7195a11eb8c061ddb72561023
+    entity_id: light.47025163dc4f22c49388
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: df33e120195a11eba0187d14428d1f1b
+    entity_id: light.47025163dc4f22c49215
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: df335698195a11eb933d3db35d3930e8
+    entity_id: light.47025163dc4f22c49220
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: df34ebeb195a11ebaa76af1631aade49
+    entity_id: light.47025163dc4f22c49412
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: df33a660195a11eb96e12b09e30e3ee2
+    entity_id: light.47025163dc4f22c49446
+    domain: light
+    brightness_pct: 100
+  mode: single
 - id: '1587167321653'
   alias: Hydroponic lights off
   description: ''
@@ -349,6 +372,83 @@
     platform: time
   condition: []
   action:
-  - data: {}
-    entity_id: switch.ebabe1a9e2fb5f018cmzs1
-    service: switch.turn_off
+  - type: turn_off
+    device_id: df335698195a11eb933d3db35d3930e8
+    entity_id: light.47025163dc4f22c49220
+    domain: light
+  - type: turn_off
+    device_id: df36b3f7195a11eb8c061ddb72561023
+    entity_id: light.47025163dc4f22c49388
+    domain: light
+  - type: turn_off
+    device_id: df33e120195a11eba0187d14428d1f1b
+    entity_id: light.47025163dc4f22c49215
+    domain: light
+  - type: turn_off
+    device_id: df34ebeb195a11ebaa76af1631aade49
+    entity_id: light.47025163dc4f22c49412
+    domain: light
+  - type: turn_off
+    device_id: df33a660195a11eb96e12b09e30e3ee2
+    entity_id: light.47025163dc4f22c49446
+    domain: light
+  mode: single
+- id: '1602553067183'
+  alias: Turn the desk strip lights on
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00:00
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      rgb_color:
+      - 255
+      - 255
+      - 0
+      brightness_pct: 100
+    entity_id: light.desk
+  mode: single
+- id: '1602553603932'
+  alias: Turn strip lights off after work
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:00:00'
+  condition:
+  - condition: time
+    after: '16:59:59'
+    weekday:
+    - fri
+  action:
+  - type: turn_off
+    device_id: 4a84d1220ceb11eb9040e94609eb8f38
+    entity_id: light.desk
+    domain: light
+  mode: single
+- id: '1602553767348'
+  alias: Turn strip lights off after school
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:20:00'
+  condition:
+  - condition: time
+    after: '21:19:59'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+  action:
+  - type: turn_off
+    device_id: 4a84d1220ceb11eb9040e94609eb8f38
+    entity_id: light.desk
+    domain: light
+  mode: single
