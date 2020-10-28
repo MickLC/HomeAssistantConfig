@@ -10,11 +10,11 @@ kids:
 
 grow_lights:
   entities:
-    - light.grow1
-    - light.grow2
-    - light.grow3
-    - light.grow4
-    - light.grow5
+    - light.47025163dc4f22c49220
+    - light.47025163dc4f22c49388
+    - light.47025163dc4f22c49215
+    - light.47025163dc4f22c49412
+    - light.47025163dc4f22c49446
 
 master_lights:
   entities:
